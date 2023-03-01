@@ -26,7 +26,10 @@ public class Values {
 
     // repo ARN
     public static final String CODECOMMIT_ARN_PREFIX = new StringBuffer().append("arn:aws:codecommit:").append(REGION).append(":").append(ACCOUNT_ID).append(":").toString();
-
+    public static final String REPO_WEB_SSM_PARAMETER = "/devax/repo/app-web";
+    public static final String REPO_RANKING_SSM_PARAMETER = "/devax/repo/app-ranking";
+    public static final String REPO_CI_SSM_PARAMETER = "/devax/repo/ci";
+    public static final String REPO_INFRA_SSM_PARAMETER = "/devax/repo/infra";
 
     // Dev Env
     public static final String DEV_ENV_PREFIX = "dev-terraform-demo";

@@ -1,10 +1,12 @@
 package com.demo.devax.pipelines;
 
+import com.demo.devax.Values;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.services.codepipeline.Artifact;
 import software.amazon.awscdk.services.codepipeline.StageProps;
 import software.amazon.awscdk.services.codepipeline.actions.Action;
+import software.amazon.awscdk.services.ssm.StringParameter;
 import software.constructs.Construct;
 
 import java.util.ArrayList;
@@ -27,11 +29,11 @@ abstract class BasePipeline extends Stack {
         super(scope, id, props);
     }
 
-    public BasePipeline(final Construct scope, final String id, final StackProps props, String appName, String buildSpec, final String codeArn) {
+    public BasePipeline(final Construct scope, final String id, final StackProps props, String appName, String buildSpec, final String repoNameParameter) {
         this(scope, id, props);
         this.setAppName(appName);
         this.setBuildspecName(buildSpec);
-        createPipeline(this, codeArn);
+        createPipeline(this, Values.CODECOMMIT_ARN_PREFIX + StringParameter.valueForStringParameter(this, repoNameParameter));
     }
     public void setBuildspecName(String buildspecName) {
         if(buildspecName.split(",").length > 1){
