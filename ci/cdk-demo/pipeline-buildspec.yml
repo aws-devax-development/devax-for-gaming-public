@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  parameter-store:
+    AWS_ACCESS_KEY_ID: "/CodeBuild/default_ak_id"
+    AWS_SECRET_ACCESS_KEY: "/CodeBuild/default_ak_secret"
+    AWS_DEFAULT_REGION: "/CodeBuild/default_region"
+phases:
+  install:
+    commands:
+      - touch ~/.bashrc
+      - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+      - . ~/.nvm/nvm.sh && nvm install 16
+      - npm -v
+      - node -v
+      - npm install -g aws-cdk
+      # - kubectl config get-contexts
+
+    # finally:
+    #   - cannot install terraform
+  # pre_build:
+  #   commands:
+  #     - echo Entered the pre_build phase...
+  #     - docker login -u User -p $LOGIN_PASSWORD
+  #   finally:
+  #     - echo This always runs even if the login command fails
+  build:
+    commands:
+      - mvn package
+      - cdk deploy -f --require-approval never --all
+    finally:
+    # - cdk destroy
+  post_build:
+    commands:
+      - echo Build completed on `date`
