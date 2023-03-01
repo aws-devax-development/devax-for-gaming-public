@@ -25,3 +25,6 @@ aws ssm put-parameter --name "/devax/repo/app-web" --value web --type String
 aws ssm put-parameter --name "/devax/repo/app-ranking" --value ranking --type String
 aws ssm put-parameter --name "/devax/repo/ci" --value ci-demo --type String
 aws ssm put-parameter --name "/devax/repo/infra" --value infra-demo --type String
+
+ACCOUNT_ID=aws sts get-caller-identity | jq .Account -r
+cdk bootstrap aws://$ACCOUNT_ID/$CURRENT_REGION

@@ -30,3 +30,6 @@ sh codecommit-init.sh
 It will create 4 repositories and push the existing code into the repositories.
 
 Now you can work from CodeCommit
+
+
+cdk deploy -f --require-approval never --all
