@@ -20,14 +20,14 @@ for REPO_NAME in $REPO_NAMES
 do
   FINAL_REPO_NAME="$REPO_PREFIX"-"$REPO_NAME"
   echo "clean up repo $FINAL_REPO_NAME"
-  aws codecommit delete-repository --repository-name $FINAL_REPO_NAME --no-cli-pager
+  aws codecommit delete-repository --repository-name $FINAL_REPO_NAME
   echo "repo $FINAL_REPO_NAME deleted"
   echo "create new repo $FINAL_REPO_NAME"
-  aws codecommit create-repository --repository-name $FINAL_REPO_NAME --no-cli-pager
+  aws codecommit create-repository --repository-name $FINAL_REPO_NAME
   echo "repo $FINAL_REPO_NAME created"
 done
 
-pip install git-remote-codecommit
+pip3 install git-remote-codecommit
 
 mkdir ".codecommit"
 cd ".codecommit"
