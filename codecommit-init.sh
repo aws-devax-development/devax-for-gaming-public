@@ -45,5 +45,8 @@ done
 # AWS_REGION environment variable
 # {user.home}/.aws/credentials and {user.home}/.aws/config files
 # in EC2, check the EC2 metadata service
+cd ..
 
-cp ./apps/
+cp ./infra/tf ./codecommit/$REPO_WEB
+
+cd ./codecommit/$REPO_WEB
