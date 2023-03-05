@@ -1,6 +1,8 @@
 #!/bin/bash
 
 REPO_PREFIX="devax-day"
+sudo yum update
+sudo yum install -y jq
 CURRENT_REGION=`aws configure get region`
 REPO_WEB=`aws ssm get-parameter --name "/devax/repo/app-web" | jq .Parameter.Value -r`
 REPO_RANKING=`aws ssm get-parameter --name "/devax/repo/app-ranking" | jq .Parameter.Value -r`
@@ -47,6 +49,9 @@ done
 # in EC2, check the EC2 metadata service
 cd ..
 
-cp ./infra/tf ./codecommit/$REPO_WEB
+cp -r ./infra/tf/* ./.codecommit/$REPO_PREFIX-$REPO_INFRA/
+cd ./.codecommit/$REPO_PREFIX-$REPO_INFRA
 
-cd ./codecommit/$REPO_WEB
+git add .
+git commit -m "init"
+git push origin master

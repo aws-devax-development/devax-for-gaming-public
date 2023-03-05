@@ -10,8 +10,8 @@ else
   CURRENT_REGION="ap-southeast-1"
 fi
 
-DEFAULT_VPC_ID=aws ec2 describe-vpcs --region ap-southeast-1 | jq .Vpcs[0].VpcId -r
-DEFAULT_SUBNET_ID=aws ec2 describe-subnets --region ap-southeast-1 | jq .Subnets[0].SubnetId -r
+DEFAULT_VPC_ID=`aws ec2 describe-vpcs --region ap-southeast-1 | jq .Vpcs[0].VpcId -r`
+DEFAULT_SUBNET_ID=`aws ec2 describe-subnets --region ap-southeast-1 | jq .Subnets[0].SubnetId -r`
 
 aws cloud9 create-environment-ec2 --name demo \
 --description "This environment is for demo" \
@@ -21,10 +21,11 @@ aws cloud9 create-environment-ec2 --name demo \
 --connection-type CONNECT_SSH --subnet-id $DEFAULT_SUBNET_ID
 
 
-aws ssm put-parameter --name "/devax/repo/app-web" --value web --type String
-aws ssm put-parameter --name "/devax/repo/app-ranking" --value ranking --type String
-aws ssm put-parameter --name "/devax/repo/ci" --value ci-demo --type String
-aws ssm put-parameter --name "/devax/repo/infra" --value infra-demo --type String
+aws ssm put-parameter --name "/devax/repo/app-web" --value web --type String --region $CURRENT_REGION
+aws ssm put-parameter --name "/devax/repo/app-ranking" --value ranking --type String --region $CURRENT_REGION
+aws ssm put-parameter --name "/devax/repo/ci" --value ci-demo --type String --region $CURRENT_REGION
+aws ssm put-parameter --name "/devax/repo/infra" --value infra-demo --type String --region $CURRENT_REGION
 
-ACCOUNT_ID=aws sts get-caller-identity | jq .Account -r
+ACCOUNT_ID=`aws sts get-caller-identity | jq .Account -r`
 cdk bootstrap aws://$ACCOUNT_ID/$CURRENT_REGION
+aws s3 mb s3://$ACCOUNT_ID-tf-state

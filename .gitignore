@@ -3,6 +3,7 @@
 **/node_modules/
 
 # Local .terraform directories
+**/.terraform.lock.hcl
 **/.terraform/*
 **/target/
 **/.idea
